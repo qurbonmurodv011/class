@@ -305,3 +305,37 @@ avtobus = Avtobus("Isuzu", 2021, 35)
 print(avto.malumot())
 print(avtobus.malumot())
 
+class Transport:
+    def __init__(self, model: str, yil: int) -> None:
+        self.model = model
+        self.yil = yil
+
+    def malumot(self) -> str:
+        return f"Model: {self.model}, Yil: {self.yil}"
+
+class Avtomobil(Transport):
+    def __init__(self, model: str, yil: int, yonilgi_turi: str) -> None:
+        # Ota klassning __init__ metodini chaqirish
+        super().__init__(model, yil)
+        self.yonilgi_turi = yonilgi_turi
+
+    def malumot(self) -> str:
+        # Ota klassdagi metod natijasiga qo'shimcha qo'shish
+        return super().malumot() + f", Yonilg'i: {self.yonilgi_turi}"
+
+class Avtobus(Transport):
+    def __init__(self, model: str, yil: int, o_rinlar_soni: int) -> None:
+        # Ota klassning __init__ metodini chaqirish
+        super().__init__(model, yil)
+        self.o_rinlar_soni = o_rinlar_soni
+
+    def malumot(self) -> str:
+        # Ota klassdagi metod natijasiga qo'shimcha qo'shish
+        return super().malumot() + f", O'rinlar: {self.o_rinlar_soni}"
+
+# Tekshirish uchun namunalar:
+avto = Avtomobil("Tesla Model S", 2023, "Elektr")
+avtobus = Avtobus("Isuzu", 2021, 35)
+
+print(avto.malumot())
+print(avtobus.malumot())
