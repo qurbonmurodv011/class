@@ -339,3 +339,72 @@ avtobus = Avtobus("Isuzu", 2021, 35)
 
 print(avto.malumot())
 print(avtobus.malumot())
+
+class Xodim:
+    def __init__(self, ism: str, asosiy_maosh: float) -> None:
+        self.ism = ism
+        self.asosiy_maosh = asosiy_maosh
+
+    def oylik(self) -> float:
+        return self.asosiy_maosh
+
+    def malumot(self) -> str:
+        return f"Ism: {self.ism}, Oylik: {self.oylik()}"
+
+class Oqsoch(Xodim):
+    def __init__(self, ism: str, asosiy_maosh: float, bonus_foiz: int) -> None:
+        super().__init__(ism, asosiy_maosh)
+        self.bonus_foiz = bonus_foiz
+
+    def oylik(self) -> float:
+        # Asosiy maoshga bonus foizini qo'shish
+        bonus_miqdori = self.asosiy_maosh * (self.bonus_foiz / 100)
+        return self.asosiy_maosh + bonus_miqdori
+
+class SoatbayXodim(Xodim):
+    def __init__(self, ism: str, soat: int, soatlik_stavka: float) -> None:
+        # Asosiy maosh o'rniga soat * stavka hisoblab yuboriladi
+        jami_maosh = soat * soatlik_stavka
+        super().__init__(ism, jami_maosh)
+
+# Tekshirish:
+xodim1 = Oqsoch("Zulhumor", 4000000, 20) # 4mln + 20% bonus
+xodim2 = SoatbayXodim("Ali", 160, 25000)   # 160 soat * 25000 stavka
+
+print(xodim1.malumot())  # Ism: Zulhumor, Oylik: 4800000.0
+print(xodim2.malumot())  # Ism: Ali, Oylik: 4000000.0
+
+class Mahsulot:
+    def __init__(self, nom: str, narx: float) -> None:
+        self.nom = nom
+        self.narx = narx
+
+    def chegirmali_narx(self, foiz: int) -> float:
+        """Berilgan foizga ko'ra narxni kamaytirib qaytaradi."""
+        chegirma_miqdori = self.narx * (foiz / 100)
+        return self.narx - chegirma_miqdori
+
+class Elektronika(Mahsulot):
+    def __init__(self, nom: str, narx: float, kafolat_oy: int) -> None:
+        super().__init__(nom, narx)
+        self.kafolat_oy = kafolat_oy
+
+    def malumot(self) -> str:
+        return f"Nom: {self.nom}, Narx: {self.narx}, Kafolat: {self.kafolat_oy} oy"
+
+class OziqOvqat(Mahsulot):
+    def __init__(self, nom: str, narx: float, yaroqlilik_kuni: str) -> None:
+        super().__init__(nom, narx)
+        self.yaroqlilik_kuni = yaroqlilik_kuni
+
+    def malumot(self) -> str:
+        return f"Nom: {self.nom}, Narx: {self.narx}, Yaroqlilik: {self.yaroqlilik_kuni}"
+
+# Tekshirish:
+smartfon = Elektronika("iPhone 15", 12000000, 12)
+sut = OziqOvqat("Lazzat Suti", 12000, "2026-02-15")
+
+print(smartfon.malumot())
+print(f"Chegirmali narxi: {smartfon.chegirmali_narx(10)}") # 10% chegirma
+
+print(sut.malumot())
